@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<document signature="Lone Wolf Custom Output" product="Hero Lab">
+<output
+  folder="fggstatblock_5e_short"
+  name="Frog God Games 5E Statblock Short"
+  summary="Basic HTML statblock output in Frog God Games Short format."
+  description="Basic HTML statblock output which summarises the heroes in the portfolio in Frog God Games Short format. (Designed by Beth Peters.)"
+  filename="statblock.xsl"
+  major="1" minor="0"
+  images="files">
+  </output>
+</document>

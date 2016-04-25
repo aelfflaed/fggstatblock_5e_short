@@ -50,11 +50,6 @@
         </html>
     </xsl:template>
     
-    <!-- Quick template to insert a space somewhere, even if XSL would normally
-     collapse it -->
-    <xsl:template name="space">
-        <xsl:text> </xsl:text>
-    </xsl:template>
     
     <!-- How to output each character in the document -->
     <xsl:template match="character">
@@ -67,13 +62,13 @@
             <!-- Attack bonuses & Armor Class-->
             <strong>AC </strong>
             <xsl:value-of select="armorclass/@ac"/>;
-            <xsl:text> </xsl:text>
+            &#160;
             
             <!-- Hit points -->
             <strong>HP </strong>
             <xsl:value-of select="health/@hitpoints"/>
             (<xsl:value-of select="health/@hitdice"/>);
-            <xsl:text> </xsl:text>
+            &#160;
             
             <!-- Add Speed -->
             <strong>Spd </strong>
@@ -85,63 +80,52 @@
             <!-- Attacks  -->
             <xsl:if test="count(melee/weapon) != 0">
                 <strong>Melee </strong>
-                <xsl:apply-templates select="melee/weapon"/>;
-                <xsl:text> </xsl:text>
+                <xsl:apply-templates select="melee/weapon"/>;&#160;
             </xsl:if>
             <xsl:if test="count(ranged/weapon) != 0">
                 <strong>Ranged </strong>
-                <xsl:apply-templates select="ranged/weapon"/>;
-                <xsl:text> </xsl:text>
+                <xsl:apply-templates select="ranged/weapon"/>;&#160;
             </xsl:if>
             
             <!-- Special Abilities Action-->
             <strong>SA </strong>
             <xsl:for-each select="otherspecials/special">
                 <xsl:if test="not(contains(@name, 'Legendary')) and not(contains(@name, 'Action'))">
-                    <xsl:if test="position() != 1">
-                        <xsl:text>,</xsl:text>
+                    <xsl:if test="position() != 1">,&#160;
                     </xsl:if>
                     <xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
                 </xsl:if>
-            </xsl:for-each>;
-            <xsl:text> </xsl:text>
+            </xsl:for-each>;&#160;
             
             <!-- Legendary Actions Legendary-->
-            <strong>LA </strong>;
+            <strong>LA </strong>
             <xsl:for-each select="otherspecials/special">
                 <xsl:if test="contains(@name, 'Legendary')">
-                    <xsl:if test="position() != 1">
-                        <xsl:text>,</xsl:text>
+                    <xsl:if test="position() != 1">,&#160;
                     </xsl:if>
                     <xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
                 </xsl:if>
-            </xsl:for-each>;
-            <xsl:text> </xsl:text>
+            </xsl:for-each>;&#160;
             
             <!-- Add Immunities -->
             <xsl:if test="damageimmunities/@text != '' or conditionimmunities/@text != ''">
                 <strong>Immune </strong>
-                <xsl:value-of select="damageimmunities/@text"/>,
-                <xsl:text> </xsl:text>
-                <xsl:value-of select="conditionimmunities/@text"/>;
-                <xsl:text> </xsl:text>
+                <xsl:value-of select="damageimmunities/@text"/>,&#160;
+                <xsl:value-of select="conditionimmunities/@text"/>;&#160;
             </xsl:if>
             
             <!-- Add Resistances -->
             <xsl:if test="damageresistances/@text != ''">
                 <strong>Resist </strong>
-                <xsl:value-of select="damageresistances/@text"/>;
-                <xsl:text> </xsl:text>
+                <xsl:value-of select="damageresistances/@text"/>;&#160;
             </xsl:if>
             
             <!-- Ability scores -->
-            <xsl:apply-templates select="abilityscores/abilityscore"/>;
-            <xsl:text> </xsl:text>
+            <xsl:apply-templates select="abilityscores/abilityscore"/>;&#160;
             
             <!-- Skills -->
             <strong>Skills </strong>
-            <xsl:apply-templates select="skills/skill"/>;
-            <xsl:text> </xsl:text>
+            <xsl:apply-templates select="skills/skill"/>;&#160;
             
             <!-- Add Senses -->
             <strong>Senses </strong>
@@ -150,87 +134,136 @@
             passive Perception
             <xsl:for-each select="skills/skill[@name = 'Perception']">
                 <xsl:value-of select="@passive"/>
-            </xsl:for-each>;
-            <xsl:text> </xsl:text>
+            </xsl:for-each>;&#160;
             
             <!-- Add Traits Not Legendary or Action-->
             <strong>Traits </strong>;
             <xsl:for-each select="otherspecials/special">
                 <xsl:if test="not(contains(@name, 'Legendary')) and not(contains(@name, 'Action'))">
-                    <xsl:if test="position() != 1">
-                        <xsl:text>,
-                        </xsl:text>
-                    </xsl:if>
+                    <xsl:if test="position() != 1">,&#160;</xsl:if>
                     <xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
                 </xsl:if>
-            </xsl:for-each>;
-            <xsl:text> </xsl:text>
+            </xsl:for-each>;&#160;
             
             <!-- Alignment -->
             <strong>AL </strong>
-            <xsl:value-of select="alignment/@abbreviation"/>;
-            <xsl:text> </xsl:text>
+            <xsl:value-of select="alignment/@abbreviation"/>;&#160;
             
             <!-- Add Challenge Rating -->
             <strong>CR </strong>
-            <xsl:value-of select="substring-after(challengerating/@text, ' ' )"/>;
-            <xsl:text> </xsl:text>
+            <xsl:value-of select="substring-after(challengerating/@text, ' ' )"/>;&#160;
             
             <!-- Add XP -->
             <strong>XP </strong>
-            <xsl:value-of select="xpaward/@value"/>;
-            <xsl:text> </xsl:text>
+            <xsl:value-of select="xpaward/@value"/>.
             
-            <!-- Spells only listed if there are any, as a list with no items in it looks odd-->
-            <xsl:if test="count(otherspecials/special[@name = 'innate Spellcasting']) != 0 or ">
-                <strong>Innate Spells: </strong>
-                <xsl:for-each select="otherspecials/special[@name = 'innate spellcasting']">
-                    <xsl:value-of select="description"/>
-                </xsl:for-each>,
-                <xsl:text> </xsl:text>
+            <!-- Innate Spellcasting -->
+            <xsl:if test="count(otherspecials/special[@name = 'Innate Spellcasting']) != 0">
+                <br/>&#160;&#160;&#160;&#160;&#160;&#160;<strong>Innate Spells: </strong>
+                <xsl:for-each select="otherspecials/special[@name = 'Innate Spellcasting']">
+                    <xsl:value-of select="description"/>.
+                </xsl:for-each>
             </xsl:if>
             
-            <xsl:if test="count(otherspecials/special[@name = 'spellcasting']) != 0">
-                <strong>Spells (slots): </strong>
-                <xsl:for-each select="otherspecials/special[@name = 'spellcasting']">
-                    <xsl:value-of select="description"/>
-                </xsl:for-each>,
-                <xsl:text> </xsl:text>
+            <!-- Spellcasting     -->
+            <xsl:if test="count(otherspecials/special[@name = 'Spellcasting']) != 0 and count(otherspecials/special[@name = 'Innate Spellcasting']) = 0">
+                <xsl:for-each select="otherspecials/special[@name = 'Spellcasting']">
+                    <xsl:value-of select="description"/>.
+                </xsl:for-each>
             </xsl:if>
             
-            <!-- Spells powers only listed if there are any, otherwise we get a list
-             with no items in it, which looks odd
-             <xsl:if test="count(spellsknown/spell | spellsmemorized/spell) != 0">
-             Spells (Slots): <xsl:apply-templates select="spellsknown/spell | spellsmemorized/spell"/>
-             </xsl:if>
-             <xsl:if test="count(spellbook/spell) != 0">
-             Spells in Spellbook: <xsl:apply-templates select="spellbook/spell"/>
-             </xsl:if>-->
+            <!-- Memorized spells      -->
+            <xsl:if test="count(spellsmemorized/spell) != 0">
+                <br/>&#160;&#160;&#160;&#160;&#160;&#160;<strong>Spells (slots): </strong>
+                0 (at will)&#8212; <xsl:apply-templates select="cantrips/spell"/>;
+            </xsl:if>
+            
+            <xsl:if test="count(spellslots/spellslot[@name = '1st']) != 0">
+                <xsl:for-each select="spellslots/spellslot[@name = '1st']">
+                    1st(<xsl:value-of select="count"/>)
+                </xsl:for-each>
+                &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '1']"/>;
+            </xsl:if>
+            
+            <xsl:if test="count(spellslots/spellslot[@name = '2nd']) != 0">
+                <xsl:for-each select="spellslots/spellslot[@name = '2nd']">
+                    2nd(<xsl:value-of select="count"/>)
+                </xsl:for-each>
+                &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '2']"/>;
+            </xsl:if>
+            
+            <xsl:if test="count(spellslots/spellslot[@name = '3rd']) != 0">
+                <xsl:for-each select="spellslots/spellslot[@name = '3rd']">
+                    3rd(<xsl:value-of select="count"/>)
+                </xsl:for-each>
+                &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '3']"/>;
+            </xsl:if>
+            
+            <xsl:if test="count(spellslots/spellslot[@name = '4th']) != 0">
+                <xsl:for-each select="spellslots/spellslot[@name = '4th']">
+                    4th(<xsl:value-of select="count"/>)
+                </xsl:for-each>
+                &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '4']"/>;
+            </xsl:if>
+            
+            <xsl:if test="count(spellslots/spellslot[@name = '5th']) != 0">
+                <xsl:for-each select="spellslots/spellslot[@name = '5th']">
+                    5th(<xsl:value-of select="count"/>)
+                </xsl:for-each>
+                &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '5']"/>;
+            </xsl:if>
+            
+            <xsl:if test="count(spellslots/spellslot[@name = '6th']) != 0">
+                <xsl:for-each select="spellslots/spellslot[@name = '6th']">
+                    6th(<xsl:value-of select="count"/>)
+                </xsl:for-each>
+                &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '6']"/>;
+            </xsl:if>
+            
+            <xsl:if test="count(spellslots/spellslot[@name = '7th']) != 0">
+                <xsl:for-each select="spellslots/spellslot[@name = '7th']">
+                    7th(<xsl:value-of select="count"/>)
+                </xsl:for-each>
+                &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '7']"/>;
+            </xsl:if>
+            
+            <xsl:if test="count(spellslots/spellslot[@name = '8th']) != 0">
+                <xsl:for-each select="spellslots/spellslot[@name = '8th']">
+                    8th(<xsl:value-of select="count"/>)
+                </xsl:for-each>
+                &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '8']"/>;
+            </xsl:if>
+            
+            <xsl:if test="count(spellslots/spellslot[@name = '9th']) != 0">
+                <xsl:for-each select="spellslots/spellslot[@name = '9th']">
+                    9th(<xsl:value-of select="count"/>)
+                </xsl:for-each>
+                &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '9']"/>;
+            </xsl:if>
+            <xsl:apply-templates select="spellsmemorized/spell"/>;
+            
+            
+            <!-- And a horizontal rule to split between stat blocks -->
+            <hr/>
         </p>
-        
-        <!-- And a horizontal rule to split between stat blocks -->
-        <hr/>
     </xsl:template>
     
     <!-- These simple rules match ability scores -->
     <xsl:template match="abilityscore">
-        <xsl:if test="position() != 1">
-            <xsl:text>, </xsl:text>
+        <xsl:if test="position() != 1">,&#160;
         </xsl:if>
         <strong>
-            <xsl:value-of select="substring(@name, 1, 3)"> </xsl:value-of>
+            <xsl:value-of select="substring(@name, 1, 3)"/>
         </strong>
-        <xsl:value-of select="abilbonus/@text"/>
+        &#160;<xsl:value-of select="abilbonus/@text"/>
     </xsl:template>
     
     <!-- Skills -->
     <xsl:template match="skill">
         <xsl:if test="@isproficient='yes'">
-            <xsl:if test="position() != 1">
-                <xsl:text>, </xsl:text>
+            <xsl:if test="position() != 1">,&#160;
             </xsl:if>
-            <xsl:value-of select="@name"/>
-            <xsl:text> </xsl:text>
+            <xsl:value-of select="@name"/>&#160;
             <xsl:if test="@value >= 0">+</xsl:if>
             <xsl:value-of select="@value"/>
         </xsl:if>
@@ -238,26 +271,28 @@
     
     <!-- Add a comma before all movements but the first -->
     <xsl:template match="movement">
-        <xsl:if test="position() != 1">
-            <xsl:text>, </xsl:text>
+        <xsl:if test="position() != 1">,&#160;
         </xsl:if>
         <xsl:value-of select="@name"/>
     </xsl:template>
     
     <!-- Weapons -->
     <xsl:template match="weapon">
-        <xsl:if test="position() != 1">
-            <xsl:text>, </xsl:text>
+        <xsl:if test="position() != 1">,&#160;
         </xsl:if>
         <xsl:value-of select="@name"/>
-        (<xsl:value-of select="@attack"/>,
-        <xsl:value-of select="substring-before(substring-after(@damage, '(' ), ')' ) "/>
-        <xsl:value-of select="substring-after(@damage, ')' )"/>)
+        (<xsl:value-of select="@attack"/>,&#160;
+        <xsl:if test="@damage contains '('">
+            <xsl:value-of select="substring-before(substring-after(@damage, '(' ), ')' ) "/>
+            <xsl:value-of select="substring-after(@damage, ')' )"/>
+        </xsl:if>)
     </xsl:template>
     
     <!-- Spells-->
-     <xsl:template match="spell">
-     <xsl:if test="position() != 1"><xsl:text>, </xsl:text>
-     </xsl:if><xsl:value-of select="@name"/> </xsl:template>
+    <xsl:template match="spell">
+        <xsl:if test="position() != 1">,&#160;
+        </xsl:if><xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
+        
+    </xsl:template>
     
 </xsl:stylesheet>

@@ -52,7 +52,7 @@
     <!-- Quick template to insert a  somewhere, even if XSL would normally
      collapse it -->
     <xsl:template name="space">
-        &#160;
+        &nbsp;
     </xsl:template>
     
     <!-- How to output each character in the document -->

@@ -23,7 +23,7 @@
                 <!--Frog God Games Style Short Statblock-->
                 <!-- XHTML requires that you specify a meta-tag to dictate the content type.-->
                 <xsl:text disable-output-escaping="yes">
-                    &lt;meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1"/&gt;
+                    <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1"/>
                 </xsl:text>
                 
                 <style type="text/css">

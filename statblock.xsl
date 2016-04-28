@@ -5,8 +5,6 @@
     
     <xsl:template match="/">
         
-        <!--Frog God Games Style Short Statblock-->
-        
         <!-- Add a proper DOCTYPE declaration here, to make sure the page is rendered
          properly. Firefox doesn't need this, so we make sure it doesn't get
          output when we're using "Transformiix", the Firefox XSLT processor.
@@ -22,7 +20,7 @@
         </xsl:if>
         <html>
             <head>
-                
+                <!--Frog God Games Style Short Statblock-->
                 <!-- XHTML requires that you specify a meta-tag to dictate the content type.-->
                 <xsl:text disable-output-escaping="yes">
                     &lt;meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1"/&gt;
@@ -193,8 +191,11 @@
             
             <!-- Innate Spellcasting-->
             <xsl:if test="count(otherspecials/special[@name = 'Innate Spellcasting']) != 0 ">
-                <br/><xsl:call-template name="space"/> <xsl:call-template name="space"/> <xsl:call-template name="space"/> <xsl:call-template name="space"/> <xsl:call-template name="space"/><xsl:call-template name="space"/>
+                <br/>
+                <xsl:call-template name="space"/> <xsl:call-template name="space"/> <xsl:call-template name="space"/>
+                <xsl:call-template name="space"/> <xsl:call-template name="space"/><xsl:call-template name="space"/>
                 <strong>Innate Spells: </strong>
+                
                 <xsl:for-each select="otherspecials/special[@name = 'Innate Spellcasting']">
                     <xsl:value-of select="@description"/>.<xsl:call-template name="space"/>
                 </xsl:for-each>
@@ -210,7 +211,9 @@
             <!-- Cantrips and Memorized spells-->
             <xsl:if test="count(cantrips/spell) != 0 or count(spellsmemorized/spell) != 0 ">
                 <br/>
-                <xsl:call-template name="space"/><xsl:call-template name="space"/><xsl:call-template name="space"/><xsl:call-template name="space"/><xsl:call-template name="space"/><xsl:call-template name="space"/><strong>Spells (slots): </strong>
+                <xsl:call-template name="space"/><xsl:call-template name="space"/><xsl:call-template name="space"/>
+                <xsl:call-template name="space"/><xsl:call-template name="space"/><xsl:call-template name="space"/>
+                <strong>Spells (slots): </strong>
                 
                 <xsl:if test="count(cantrips/spell) != 0">
                     0 (at will)&#8212;
@@ -295,11 +298,6 @@
         <xsl:value-of select="abilbonus/@text"/>
     </xsl:template>
     
-    
-    
-    
-    
-    
     <!-- Weapons-->
     <xsl:template match="weapon">
         <xsl:if test="position() != 1">,<xsl:call-template name="space"/>
@@ -314,9 +312,7 @@
             </xsl:otherwise>
         </xsl:choose>
         
-        (
-        <xsl:value-of select="@attack"/>,<xsl:call-template name="space"/>
-        
+        (<xsl:value-of select="@attack"/>,<xsl:call-template name="space"/>
         <xsl:choose>
             <xsl:when test="contains(@damage, '(')">
                 <xsl:value-of select="substring-before(substring-after(@damage, '(' ), ')' ) "/>
@@ -326,9 +322,7 @@
             <xsl:otherwise>
                 <xsl:value-of select="@damage"/>
             </xsl:otherwise>
-        </xsl:choose>
-        
-        )
+        </xsl:choose>)
     </xsl:template>
     
     <!-- Spells-->

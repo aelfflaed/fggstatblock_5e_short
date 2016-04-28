@@ -14,8 +14,7 @@
          -->
         <xsl:if test="system-property('xsl:vendor') != 'Transformiix'">
             <xsl:text disable-output-escaping="yes">
-                <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+                <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
             </xsl:text>
         </xsl:if>
         <html>
@@ -23,7 +22,7 @@
                 
                 <!-- XHTML requires that you specify a meta-tag to dictate the content type.-->
                 <xsl:text disable-output-escaping="yes">
-                    <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1"/>
+                    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
                 </xsl:text>
                 
                 <style type="text/css">

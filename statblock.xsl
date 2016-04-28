@@ -14,8 +14,8 @@
          -->
         <xsl:if test="system-property('xsl:vendor') != 'Transformiix'">
             <xsl:text disable-output-escaping="yes">
-                &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+                <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
             </xsl:text>
         </xsl:if>
         <html>

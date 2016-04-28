@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="windows-1252"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.w3.org/1999/xhtml" version="1.0">
-    <!--Frog God Games Style Short Statblock-->
     <xsl:output encoding="utf-8" method="html" />
     
     <xsl:template match="/">
+        
+        <!--Frog God Games Style Short Statblock-->
         
         <!-- Add a proper DOCTYPE declaration here, to make sure the page is rendered
          properly. Firefox doesn't need this, so we make sure it doesn't get

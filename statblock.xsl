@@ -4,7 +4,7 @@
     <xsl:output encoding="utf-8" method="html" />
     
     <xsl:template match="/">
-        
+        <!--Frog God Games Style Short Statblock-->
         <!-- Add a proper DOCTYPE declaration here, to make sure the page is rendered
          properly. Firefox doesn't need this, so we make sure it doesn't get
          output when we're using "Transformiix", the Firefox XSLT processor.
@@ -20,7 +20,7 @@
         </xsl:if>
         <html>
             <head>
-                <!--Frog God Games Style Short Statblock-->
+                
                 <!-- XHTML requires that you specify a meta-tag to dictate the content type.-->
                 <xsl:text disable-output-escaping="yes">
                     <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1"/>

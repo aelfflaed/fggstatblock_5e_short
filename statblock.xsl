@@ -13,7 +13,6 @@
          directly linked from an XML document, i.e. if you're trying to test
          it without having to tell HL to regenerate the XML file every time.
          -->
-        
         <xsl:if test="system-property('xsl:vendor') != 'Transformiix'">
             <xsl:text disable-output-escaping="yes">
                 &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -22,6 +21,7 @@
         </xsl:if>
         <html>
             <head>
+                
                 <!-- XHTML requires that you specify a meta-tag to dictate the content type.-->
                 <xsl:text disable-output-escaping="yes">
                     &lt;meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1"/&gt;

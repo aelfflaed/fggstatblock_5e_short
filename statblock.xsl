@@ -60,7 +60,7 @@
     <!-- Quick template to insert a  somewhere, even if XSL would normally collapse it -->
     <!--&#8212; bad characters &#x2014; not recognized  -->
     <xsl:template name="emdash">
-        <xsl:text>—</xsl:text>
+        <xsl:text>--</xsl:text>
     </xsl:template>
     
     <!-- How to output each character in the document -->

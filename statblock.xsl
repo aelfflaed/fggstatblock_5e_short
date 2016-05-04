@@ -54,10 +54,13 @@
     
     
     <!-- Quick template to insert a  somewhere, even if XSL would normally collapse it -->
-    <!-- <xsl:template name="space">&#160;</xsl:template>funny characters-->
-    <!--<xsl:template name="space"> </xsl:template>spaces collapse-->
     <xsl:template name="space">
         <xsl:text> </xsl:text>
+    </xsl:template>
+    <!-- Quick template to insert a  somewhere, even if XSL would normally collapse it -->
+    <!--&#8212; bad characters &#x2014; not recognized  -->
+    <xsl:template name="emdash">
+        <xsl:text>—</xsl:text>
     </xsl:template>
     
     <!-- How to output each character in the document -->
@@ -72,12 +75,10 @@
             <strong>AC </strong>
             <xsl:value-of select="armorclass/@ac"/>;
             
-            
             <!-- Hit points -->
             <strong>HP </strong>
             <xsl:value-of select="health/@hitpoints"/>
             (<xsl:value-of select="health/@hitdice"/>);<xsl:call-template name="space"/>
-            
             
             <!-- Add Speed-->
             <strong>Spd </strong>
@@ -224,7 +225,7 @@
                 <strong>Spells (slots): </strong>
                 
                 <xsl:if test="count(cantrips/spell) != 0">
-                    0 (at will)&#8212;
+                    0 (at will)<xsl:call-template name="emdash"/>
                     <xsl:apply-templates select="cantrips/spell"/>;
                 </xsl:if>
                 
@@ -232,63 +233,63 @@
                     <xsl:for-each select="spellslots/spellslot[@name = '1st']">
                         1st(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '1']"/>;<xsl:call-template name="space"/>
+                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '1']"/>;<xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '2nd']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '2nd']">
                         2nd(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '2']"/>;<xsl:call-template name="space"/>
+                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '2']"/>;<xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '3rd']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '3rd']">
                         3rd(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '3']"/>;<xsl:call-template name="space"/>
+                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '3']"/>;<xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '4th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '4th']">
                         4th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '4']"/>;<xsl:call-template name="space"/>
+                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '4']"/>;<xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '5th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '5th']">
                         5th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '5']"/>;<xsl:call-template name="space"/>
+                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '5']"/>;<xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '6th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '6th']">
                         6th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '6']"/>;<xsl:call-template name="space"/>
+                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '6']"/>;<xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '7th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '7th']">
                         7th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '7']"/>;<xsl:call-template name="space"/>
+                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '7']"/>;<xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '8th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '8th']">
                         8th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '8']"/>;<xsl:call-template name="space"/>
+                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '8']"/>;<xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '9th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '9th']">
                         9th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    &#8212;<xsl:apply-templates select="spellsmemorized/spell[@level = '9']"/>;<xsl:call-template name="space"/>
+                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '9']"/>;<xsl:call-template name="space"/>
                 </xsl:if>
             </xsl:if>
             

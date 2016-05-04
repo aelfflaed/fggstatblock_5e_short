@@ -54,8 +54,11 @@
     
     
     <!-- Quick template to insert a  somewhere, even if XSL would normally collapse it -->
-    <!-- <xsl:template name="space">&#160;</xsl:template>-->
-    <xsl:template name="space"> </xsl:template>
+    <!-- <xsl:template name="space">&#160;</xsl:template>funny characters-->
+    <!--<xsl:template name="space"> </xsl:template>spaces collapse-->
+    <xsl:template name="space">
+        <xsl:text> </xsl:text>
+    </xsl:template>
     
     <!-- How to output each character in the document -->
     <xsl:template match="character">

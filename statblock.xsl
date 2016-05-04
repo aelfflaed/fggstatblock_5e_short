@@ -52,15 +52,9 @@
         </html>
     </xsl:template>
     
-    
-    <!-- Quick template to insert a  somewhere, even if XSL would normally collapse it -->
+    <!-- Quick template to insert a space somewhere, even if XSL would normally collapse it -->
     <xsl:template name="space">
         <xsl:text> </xsl:text>
-    </xsl:template>
-    <!-- Quick template to insert a  somewhere, even if XSL would normally collapse it -->
-    <!--&#8212; bad characters &#x2014; not recognized  -->
-    <xsl:template name="emdash">
-        <xsl:text>--</xsl:text>
     </xsl:template>
     
     <!-- How to output each character in the document -->
@@ -78,14 +72,16 @@
             <!-- Hit points -->
             <strong>HP </strong>
             <xsl:value-of select="health/@hitpoints"/>
-            (<xsl:value-of select="health/@hitdice"/>);<xsl:call-template name="space"/>
+            (<xsl:value-of select="health/@hitdice"/>);
+            <xsl:call-template name="space"/>
             
             <!-- Add Speed-->
             <strong>Spd </strong>
             <xsl:value-of select="movement/basespeed/@value"/>ft
             <xsl:if test="count(movement/special) != 0">
                 <xsl:for-each select="movement/special">
-                    ,<xsl:call-template name="space"/>
+                    ,
+                    <xsl:call-template name="space"/>
                     <xsl:value-of select="@name"/>
                 </xsl:for-each>
             </xsl:if>;
@@ -94,11 +90,13 @@
             <!-- Attacks  -->
             <xsl:if test="count(melee/weapon) != 0">
                 <strong>Melee </strong>
-                <xsl:apply-templates select="melee/weapon"/>;<xsl:call-template name="space"/>
+                <xsl:apply-templates select="melee/weapon"/>;
+                <xsl:call-template name="space"/>
             </xsl:if>
             <xsl:if test="count(ranged/weapon) != 0">
                 <strong>Ranged </strong>
-                <xsl:apply-templates select="ranged/weapon"/>;<xsl:call-template name="space"/>
+                <xsl:apply-templates select="ranged/weapon"/>;
+                <xsl:call-template name="space"/>
             </xsl:if>
             
             <!-- Special Abilities Action-->
@@ -106,11 +104,13 @@
                 <strong>SA </strong>
                 <xsl:for-each select="otherspecials/special">
                     <xsl:if test="not(contains(@name, 'Legendary')) and (contains(@name, 'Action'))">
-                        <xsl:if test="position() != 1">,<xsl:call-template name="space"/>
+                        <xsl:if test="position() != 1">,
+                            <xsl:call-template name="space"/>
                         </xsl:if>
                         <xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
                     </xsl:if>
-                </xsl:for-each>;<xsl:call-template name="space"/>
+                </xsl:for-each>;
+                <xsl:call-template name="space"/>
             </xsl:if>
             
             <!-- Legendary Actions Legendary-->
@@ -118,46 +118,56 @@
                 <strong>LA </strong>
                 <xsl:for-each select="otherspecials/special">
                     <xsl:if test="contains(@name, 'Legendary')">
-                        <xsl:if test="position() != 1">,<xsl:call-template name="space"/>
+                        <xsl:if test="position() != 1">,
+                            <xsl:call-template name="space"/>
                         </xsl:if>
                         <xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
                     </xsl:if>
-                </xsl:for-each>;<xsl:call-template name="space"/>
+                </xsl:for-each>;
+                <xsl:call-template name="space"/>
             </xsl:if>
             
             <!-- Add Immunities-->
             <xsl:if test="damageimmunities/@text != '' or conditionimmunities/@text != ''">
                 <strong>Immune </strong>
-                <xsl:value-of select="damageimmunities/@text"/>,<xsl:call-template name="space"/>
-                <xsl:value-of select="conditionimmunities/@text"/>;<xsl:call-template name="space"/>
+                <xsl:value-of select="damageimmunities/@text"/>,
+                <xsl:call-template name="space"/>
+                <xsl:value-of select="conditionimmunities/@text"/>;
+                <xsl:call-template name="space"/>
             </xsl:if>
             
             <!-- Add Resistances-->
             <xsl:if test="damageresistances/@text != ''">
                 <strong>Resist </strong>
-                <xsl:value-of select="damageresistances/@text"/>;<xsl:call-template name="space"/>
+                <xsl:value-of select="damageresistances/@text"/>;
+                <xsl:call-template name="space"/>
             </xsl:if>
             
             <!-- Ability scores -->
-            <xsl:apply-templates select="abilityscores/abilityscore"/>;<xsl:call-template name="space"/>
+            <xsl:apply-templates select="abilityscores/abilityscore"/>;
+            <xsl:call-template name="space"/>
             
             <!-- Skills -->
             <xsl:if test="count(skills/skill[@isproficient='yes']) != 0 ">
                 <strong>Skills </strong>
                 <xsl:for-each select="skills/skill[@isproficient='yes']">
                     <xsl:if test="position() != 1">
-                        ,<xsl:call-template name="space"/>
+                        ,
+                        <xsl:call-template name="space"/>
                     </xsl:if>
-                    <xsl:value-of select="@name"/><xsl:call-template name="space"/>
+                    <xsl:value-of select="@name"/>
+                    <xsl:call-template name="space"/>
                     <xsl:if test="@value >= 0">+</xsl:if><xsl:value-of select="@value"/>
-                </xsl:for-each>;<xsl:call-template name="space"/>
+                </xsl:for-each>;
+                <xsl:call-template name="space"/>
             </xsl:if>
             
             <!-- Add Senses -->
             <strong>Senses </strong>
             <xsl:for-each select="senses/special">
                 <xsl:if test="position() != 1">
-                    ,<xsl:call-template name="space"/>
+                    ,
+                    <xsl:call-template name="space"/>
                 </xsl:if>
                 <xsl:value-of select="@name"/>
             </xsl:for-each>
@@ -167,7 +177,8 @@
             passive Perception
             <xsl:for-each select="skills/skill[@name = 'Perception']">
                 <xsl:value-of select="@passive"/>
-            </xsl:for-each>;<xsl:call-template name="space"/>
+            </xsl:for-each>;
+            <xsl:call-template name="space"/>
             
             <!-- Add Traits Not Legendary or Action-->
             <xsl:if test="count(otherspecials/special[not(contains(@name, 'Action'))]) != 0 or count(otherspecials/special[contains(@name, 'Legendary')]) != 0 ">
@@ -175,57 +186,72 @@
                 <xsl:for-each select="otherspecials/special">
                     <xsl:if test="not(contains(@name, 'Legendary' )) and not(contains(@name, 'Action' ))">
                         <xsl:if test="position() != 1">
-                            ,<xsl:call-template name="space"/>
+                            ,
+                            <xsl:call-template name="space"/>
                         </xsl:if>
                         <xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
                     </xsl:if>
-                </xsl:for-each>;<xsl:call-template name="space"/>
+                </xsl:for-each>;
+                <xsl:call-template name="space"/>
             </xsl:if>
             
             <!-- Alignment-->
             <strong>AL </strong>
-            <xsl:value-of select="alignment/@abbreviation"/>;<xsl:call-template name="space"/>
+            <xsl:value-of select="alignment/@abbreviation"/>;
+            <xsl:call-template name="space"/>
             
             <!-- Add Challenge Rating-->
             <xsl:if test="challengerating">
                 <strong>CR </strong>
-                <xsl:value-of select="substring-after(challengerating/@text, ' ' )"/>;<xsl:call-template name="space"/>
+                <xsl:value-of select="substring-after(challengerating/@text, ' ' )"/>;
+                <xsl:call-template name="space"/>
             </xsl:if>
             
             <!-- Add XP-->
             <xsl:if test="xpaward">
                 <strong>XP </strong>
-                <xsl:value-of select="xpaward/@value"/>.<xsl:call-template name="space"/>
+                <xsl:value-of select="xpaward/@value"/>.
+                <xsl:call-template name="space"/>
             </xsl:if>
             
             <!-- Innate Spellcasting-->
             <xsl:if test="count(otherspecials/special[@name = 'Innate Spellcasting']) != 0 ">
                 <br/>
-                <xsl:call-template name="space"/> <xsl:call-template name="space"/> <xsl:call-template name="space"/>
-                <xsl:call-template name="space"/> <xsl:call-template name="space"/><xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
                 <strong>Innate Spells: </strong>
                 
                 <xsl:for-each select="otherspecials/special[@name = 'Innate Spellcasting']">
-                    <xsl:value-of select="@description"/>.<xsl:call-template name="space"/>
+                    <xsl:value-of select="@description"/>.
+                    <xsl:call-template name="space"/>
                 </xsl:for-each>
             </xsl:if>
             
             <!-- Non-Innate Spellcasting-->
             <xsl:if test="count(otherspecials/special[@name = 'Spellcasting']) != 0 ">
                 <xsl:for-each select="otherspecials/special[@name = 'Spellcasting']">
-                    <xsl:value-of select="@description"/>.<xsl:call-template name="space"/>
+                    <xsl:value-of select="@description"/>.
+                    <xsl:call-template name="space"/>
                 </xsl:for-each>
             </xsl:if>
             
             <!-- Cantrips and Memorized spells-->
             <xsl:if test="count(cantrips/spell) != 0 or count(spellsmemorized/spell) != 0 ">
                 <br/>
-                <xsl:call-template name="space"/><xsl:call-template name="space"/><xsl:call-template name="space"/>
-                <xsl:call-template name="space"/><xsl:call-template name="space"/><xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
+                <xsl:call-template name="space"/>
                 <strong>Spells (slots): </strong>
                 
                 <xsl:if test="count(cantrips/spell) != 0">
-                    0 (at will)<xsl:call-template name="emdash"/>
+                    0 (at will)~
                     <xsl:apply-templates select="cantrips/spell"/>;
                 </xsl:if>
                 
@@ -233,63 +259,72 @@
                     <xsl:for-each select="spellslots/spellslot[@name = '1st']">
                         1st(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '1']"/>;<xsl:call-template name="space"/>
+                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '1']"/>;
+                    <xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '2nd']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '2nd']">
                         2nd(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '2']"/>;<xsl:call-template name="space"/>
+                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '2']"/>;
+                    <xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '3rd']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '3rd']">
                         3rd(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '3']"/>;<xsl:call-template name="space"/>
+                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '3']"/>;
+                    <xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '4th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '4th']">
                         4th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '4']"/>;<xsl:call-template name="space"/>
+                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '4']"/>;
+                    <xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '5th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '5th']">
                         5th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '5']"/>;<xsl:call-template name="space"/>
+                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '5']"/>;
+                    <xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '6th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '6th']">
                         6th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '6']"/>;<xsl:call-template name="space"/>
+                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '6']"/>;
+                    <xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '7th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '7th']">
                         7th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '7']"/>;<xsl:call-template name="space"/>
+                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '7']"/>;
+                    <xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '8th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '8th']">
                         8th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '8']"/>;<xsl:call-template name="space"/>
+                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '8']"/>;
+                    <xsl:call-template name="space"/>
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '9th']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '9th']">
                         9th(<xsl:value-of select="count"/>)
                     </xsl:for-each>
-                    <xsl:call-template name="emdash"/><xsl:apply-templates select="spellsmemorized/spell[@level = '9']"/>;<xsl:call-template name="space"/>
+                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '9']"/>;
+                    <xsl:call-template name="space"/>
                 </xsl:if>
             </xsl:if>
             
@@ -300,7 +335,8 @@
     
     <!-- These simple rules match ability scores -->
     <xsl:template match="abilityscore">
-        <xsl:if test="position() != 1">,<xsl:call-template name="space"/>
+        <xsl:if test="position() != 1">,
+            <xsl:call-template name="space"/>
         </xsl:if>
         <strong><xsl:value-of select="substring(@name, 1, 3)"/></strong>
         <xsl:call-template name="space"/>
@@ -309,7 +345,8 @@
     
     <!-- Weapons-->
     <xsl:template match="weapon">
-        <xsl:if test="position() != 1">,<xsl:call-template name="space"/>
+        <xsl:if test="position() != 1">,
+            <xsl:call-template name="space"/>
         </xsl:if>
         
         <xsl:choose>
@@ -321,7 +358,8 @@
             </xsl:otherwise>
         </xsl:choose>
         
-        (<xsl:value-of select="@attack"/>,<xsl:call-template name="space"/>
+        (<xsl:value-of select="@attack"/>,
+        <xsl:call-template name="space"/>
         <xsl:choose>
             <xsl:when test="contains(@damage, '(')">
                 <xsl:value-of select="substring-before(substring-after(@damage, '(' ), ')' ) "/>
@@ -336,7 +374,8 @@
     
     <!-- Spells-->
     <xsl:template match="spell">
-        <xsl:if test="position() != 1">,<xsl:call-template name="space"/>
+        <xsl:if test="position() != 1">,
+            <xsl:call-template name="space"/>
         </xsl:if>
         <xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
     </xsl:template>

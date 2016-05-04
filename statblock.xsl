@@ -130,16 +130,16 @@
             <!-- Add Immunities-->
             <xsl:if test="damageimmunities/@text != '' or conditionimmunities/@text != ''">
                 <strong>Immune </strong>
-                <xsl:value-of select="damageimmunities/@text"/>,
+                <xsl:value-of select="translate(damageimmunities/@text, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>,
                 <xsl:call-template name="space"/>
-                <xsl:value-of select="conditionimmunities/@text"/>;
+                <xsl:value-of select="translate(conditionimmunities/@text, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>;
                 <xsl:call-template name="space"/>
             </xsl:if>
             
             <!-- Add Resistances-->
             <xsl:if test="damageresistances/@text != ''">
                 <strong>Resist </strong>
-                <xsl:value-of select="damageresistances/@text"/>;
+                <xsl:value-of select="translate(damageresistances/@text, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>;
                 <xsl:call-template name="space"/>
             </xsl:if>
             
@@ -168,7 +168,7 @@
                     ,
                     <xsl:call-template name="space"/>
                 </xsl:if>
-                <xsl:value-of select="@name"/>
+                <xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
             </xsl:for-each>
             <xsl:call-template name="space"/>
             
@@ -223,19 +223,22 @@
                 <xsl:call-template name="space"/>
                 <xsl:call-template name="space"/>
                 <strong>        Innate Spells: </strong>
-                
-                <xsl:for-each select="otherspecials/special[@name = 'Innate Spellcasting']">
-                    <xsl:value-of select="@description"/>.
-                    <xsl:call-template name="space"/>
-                </xsl:for-each>
+                <SPAN STYLE="font-style:italic">
+                    <xsl:for-each select="otherspecials/special[@name = 'Innate Spellcasting']">
+                        <xsl:value-of select="@description"/>.
+                        <xsl:call-template name="space"/>
+                    </xsl:for-each>
+                </SPAN>
             </xsl:if>
             
             <!-- Non-Innate Spellcasting-->
             <xsl:if test="count(otherspecials/special[@name = 'Spellcasting']) != 0 ">
-                <xsl:for-each select="otherspecials/special[@name = 'Spellcasting']">
-                    <xsl:value-of select="@description"/>.
-                    <xsl:call-template name="space"/>
-                </xsl:for-each>
+                <SPAN STYLE="font-style:italic">
+                    <xsl:for-each select="otherspecials/special[@name = 'Spellcasting']">
+                        <xsl:value-of select="@description"/>.
+                        <xsl:call-template name="space"/>
+                    </xsl:for-each>
+                </SPAN>
             </xsl:if>
             
             <!-- Cantrips and Memorized spells-->
@@ -251,14 +254,17 @@
                 
                 <xsl:if test="count(cantrips/spell) != 0">
                     0 (at will)~
-                    <xsl:apply-templates select="cantrips/spell"/>;
+                    <SPAN STYLE="font-style:italic">
+                        <xsl:apply-templates select="cantrips/spell"/>
+                    </SPAN>
+                    ;
                 </xsl:if>
                 
                 <xsl:if test="count(spellslots/spellslot[@name = '1st']) != 0">
                     <xsl:for-each select="spellslots/spellslot[@name = '1st']">
                         1st (<xsl:value-of select="@count"/>)
                     </xsl:for-each>
-                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '1']"/>;
+                    ~<SPAN STYLE="font-style:italic"><xsl:apply-templates select="spellsmemorized/spell[@level = '1']"/></SPAN>;
                     <xsl:call-template name="space"/>
                 </xsl:if>
                 
@@ -266,7 +272,7 @@
                     <xsl:for-each select="spellslots/spellslot[@name = '2nd']">
                         2nd (<xsl:value-of select="@count"/>)
                     </xsl:for-each>
-                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '2']"/>;
+                    ~<SPAN STYLE="font-style:italic"><xsl:apply-templates select="spellsmemorized/spell[@level = '2']"/></SPAN>;
                     <xsl:call-template name="space"/>
                 </xsl:if>
                 
@@ -274,7 +280,7 @@
                     <xsl:for-each select="spellslots/spellslot[@name = '3rd']">
                         3rd (<xsl:value-of select="@count"/>)
                     </xsl:for-each>
-                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '3']"/>;
+                    ~<SPAN STYLE="font-style:italic"><xsl:apply-templates select="spellsmemorized/spell[@level = '3']"/></SPAN>;
                     <xsl:call-template name="space"/>
                 </xsl:if>
                 
@@ -282,7 +288,7 @@
                     <xsl:for-each select="spellslots/spellslot[@name = '4th']">
                         4th (<xsl:value-of select="@count"/>)
                     </xsl:for-each>
-                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '4']"/>;
+                    ~<SPAN STYLE="font-style:italic"><xsl:apply-templates select="spellsmemorized/spell[@level = '4']"/></SPAN>;
                     <xsl:call-template name="space"/>
                 </xsl:if>
                 
@@ -290,7 +296,7 @@
                     <xsl:for-each select="spellslots/spellslot[@name = '5th']">
                         5th (<xsl:value-of select="@count"/>)
                     </xsl:for-each>
-                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '5']"/>;
+                    ~<SPAN STYLE="font-style:italic"><xsl:apply-templates select="spellsmemorized/spell[@level = '5']"/></SPAN>;
                     <xsl:call-template name="space"/>
                 </xsl:if>
                 
@@ -298,7 +304,7 @@
                     <xsl:for-each select="spellslots/spellslot[@name = '6th']">
                         6th (<xsl:value-of select="@count"/>)
                     </xsl:for-each>
-                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '6']"/>;
+                    ~<SPAN STYLE="font-style:italic"><xsl:apply-templates select="spellsmemorized/spell[@level = '6']"/></SPAN>;
                     <xsl:call-template name="space"/>
                 </xsl:if>
                 
@@ -306,7 +312,7 @@
                     <xsl:for-each select="spellslots/spellslot[@name = '7th']">
                         7th (<xsl:value-of select="@count"/>)
                     </xsl:for-each>
-                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '7']"/>;
+                    ~<SPAN STYLE="font-style:italic"><xsl:apply-templates select="spellsmemorized/spell[@level = '7']"/></SPAN>;
                     <xsl:call-template name="space"/>
                 </xsl:if>
                 
@@ -314,7 +320,7 @@
                     <xsl:for-each select="spellslots/spellslot[@name = '8th']">
                         8th (<xsl:value-of select="@count"/>)
                     </xsl:for-each>
-                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '8']"/>;
+                    ~<SPAN STYLE="font-style:italic"><xsl:apply-templates select="spellsmemorized/spell[@level = '8']"/></SPAN>;
                     <xsl:call-template name="space"/>
                 </xsl:if>
                 
@@ -322,7 +328,7 @@
                     <xsl:for-each select="spellslots/spellslot[@name = '9th']">
                         9th (<xsl:value-of select="@count"/>)
                     </xsl:for-each>
-                    ~<xsl:apply-templates select="spellsmemorized/spell[@level = '9']"/>;
+                    ~<SPAN STYLE="font-style:italic"><xsl:apply-templates select="spellsmemorized/spell[@level = '9']"/></SPAN>;
                     <xsl:call-template name="space"/>
                 </xsl:if>
             </xsl:if>
@@ -377,10 +383,12 @@
     
     <!-- Spells-->
     <xsl:template match="spell">
-        <xsl:if test="position() != 1">,
-            <xsl:call-template name="space"/>
-        </xsl:if>
-        <xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
+        <SPAN STYLE="font-style:italic">
+            <xsl:if test="position() != 1">,
+                <xsl:call-template name="space"/>
+            </xsl:if>
+            <xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
+        </SPAN>
     </xsl:template>
     
 </xsl:stylesheet>

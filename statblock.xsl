@@ -349,7 +349,7 @@
                 <xsl:value-of select="translate(substring-before(@name, '(' ) , 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="translate(@name , 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
+                <xsl:value-of select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
             </xsl:otherwise>
         </xsl:choose>
         

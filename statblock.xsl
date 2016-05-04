@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="windows-1252"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.w3.org/1999/xhtml" version="1.0">
     <xsl:output encoding="utf-8" method="html" />
     
     <xsl:template match="/">
-        <!--Frog God Games Style Short Statblock-->
+        
         <!-- Add a proper DOCTYPE declaration here, to make sure the page is rendered
          properly. Firefox doesn't need this, so we make sure it doesn't get
          output when we're using "Transformiix", the Firefox XSLT processor.
@@ -14,16 +14,19 @@
          -->
         <xsl:if test="system-property('xsl:vendor') != 'Transformiix'">
             <xsl:text disable-output-escaping="yes">
-                <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+                &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
             </xsl:text>
         </xsl:if>
         <html>
             <head>
                 
-                <!-- XHTML requires that you specify a meta-tag to dictate the content type.-->
+                <!-- XHTML requires that you specify a meta-tag to dictate the content type.
+                 -->
                 <xsl:text disable-output-escaping="yes">
-                    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+                    &lt;meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1"/&gt;
                 </xsl:text>
+                
                 
                 <style type="text/css">
                     body {
@@ -32,20 +35,23 @@
                     font-size: 12pt;
                     }
                 </style>
-                
+                <!--Frog God Games Style Short Statblock-->
                 <!-- Page title - just find the first character and use its name  -->
                 <title><xsl:value-of select="/document/public/character/@name"/></title>
             </head>
             
             <body>
+                
                 <!-- Output all our character nodes in turn
                  NOTE: We use //character to ensure that we pick up minions as well, since
                  they're children of characters
                  -->
                 <xsl:apply-templates select="/document/public//character"/>
+                
             </body>
         </html>
     </xsl:template>
+    
     
     <!-- Quick template to insert a  somewhere, even if XSL would normally
      collapse it -->
